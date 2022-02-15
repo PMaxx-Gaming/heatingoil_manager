@@ -7,6 +7,8 @@ Keep in mind, this won't be as accurate as a physical tank level sensor, but it 
 
 It should work with minimal changes, other than those noted within the configuration files (fuel pump rating, hvac state sensor name, etc)
 
+I've set up all of the input_numbers, automations, etc within the UI editor on my own system; I've just written them in YAML here for ease of use, but feel free to port the yaml into your UI if desired. Otherwise everything here should be just "copy/paste" aside from what's been noted above.
+
 Each time you add fuel to your oil tank you just input the amount of fuel added to the "Last Fill" input, and set the "Last Fill Price" to the cost per litre for your last fillup; the sensors and automations should take care of the rest.
 <br/>
 <br/>
