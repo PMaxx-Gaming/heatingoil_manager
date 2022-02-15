@@ -7,8 +7,10 @@ Keep in mind, this won't be as accurate as a physical tank level sensor, but it 
 
 It should work with minimal changes, other than those noted within the configuration files (fuel pump rating, hvac state sensor name, etc)
 
+Each time you add fuel to your oil tank you just input the amount of fuel added to the "Last Fill" input, and set the "Last Fill Price" to the cost per litre for your last fillup; the sensors and automations should take care of the rest.
+<br/>
+<br/>
 **SCREENSHOTS:**
-
 <br/>
 Main Interface:
 <img src="https://i.imgur.com/4rABENQ.jpg" width="800px">
