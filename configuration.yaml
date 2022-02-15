@@ -38,7 +38,7 @@ input_number:
   furnace_fuel_level:
     name: Furnace Oil Level
     min: 0
-    max: 910
+    max: 910 #SET THIS TO THE SIZE OF YOUR FUEL TANK (MINE IS 910 LITRES)
     step: 0.1
     mode: box
     unit_of_measurement: Litres
@@ -47,7 +47,7 @@ input_number:
   heating_time_left
     name: Heating Time Left
     min: 0
-    max: 325
+    max: 325 #I SET THIS TO SLIGHTLY HIGHER THAN THE ESTIMATED AMOUNT OF RUNTIME FROM A FULL FUEL TANK (TOTAL LITRES / BURN RATE = HOURS PER TANK)
     step: 0.01
     mode: box
     unit_of_measurement: Hours
@@ -56,7 +56,7 @@ input_number:
   furnace_oil_last_fill_amount
     name: Last Fill
     min: 0
-    max: 910
+    max: 910 #SET THIS TO THE SIZE OF YOUR FUEL TANK (MINE IS 910 LITRES)
     step: 0.1
     mode: box
     unit_of_measurement: Litres
@@ -74,7 +74,7 @@ input_number:
   furnace_fuel_after_filling
     name: Level After Filling
     min: 0
-    max: 910
+    max: 910 #SET THIS TO THE SIZE OF YOUR FUEL TANK (MINE IS 910 LITRES)
     step: 0.1
     mode: box
     unit_of_measurement: Litres
@@ -83,7 +83,7 @@ input_number:
   furnace_oil_previous_level
     name: Previous Level
     min: 0
-    max: 910
+    max: 910 #SET THIS TO THE SIZE OF YOUR FUEL TANK (MINE IS 910 LITRES)
     step: 0.1
     mode: box
     unit_of_measurement: h
