@@ -3,7 +3,7 @@
   description: ''
   trigger:
   - platform: state
-    entity_id: sensor.living_room_thermostat_hvac_state //set to the name of your thermostat's HVAC state sensor
+    entity_id: sensor.living_room_thermostat_hvac_state //SET TO THE NAME OF YOUR THERMOSTAT'S HVAC STATE SENSOR
     to: heat
   condition: []
   action:
@@ -21,7 +21,7 @@
     entity_id: sensor.furnace_time_on_today
   condition:
   - condition: state
-    entity_id: sensor.living_room_thermostat_hvac_state //set to the name of your thermostat's HVAC state sensor
+    entity_id: sensor.living_room_thermostat_hvac_state //SET TO THE NAME OF YOUR THERMOSTAT'S HVAC STATE SENSOR
     state: heat
   action:
   - service: input_number.set_value
