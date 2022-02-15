@@ -9,7 +9,7 @@ views:
       - type: horizontal-stack
         cards:
           - type: thermostat
-            entity: climate.living_room  //YOUR THERMOSTAT ENTITY
+            entity: climate.living_room  #YOUR THERMOSTAT ENTITY
           - type: vertical-stack
             cards:
               - type: gauge
