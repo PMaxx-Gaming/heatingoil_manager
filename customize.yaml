@@ -1,0 +1,8 @@
+sensor.furnace_fuel_used:
+  icon: mdi:car-coolant-level
+sensor.furnace_fuel_cost:
+  icon: mdi:currency-usd
+sensor.heating_time_left:
+  icon: mdi:timer-sand
+sensor.heating_days_left:
+  icon: mdi:calendar
