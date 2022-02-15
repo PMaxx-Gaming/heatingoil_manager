@@ -1,0 +1,108 @@
+- id: '1644422834637'
+  alias: FURNACE - Daily Furnace Oil Set Previous Usage
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.living_room_thermostat_hvac_state //set to the name of your thermostat's HVAC state sensor
+    to: heat
+  condition: []
+  action:
+  - service: input_number.set_value
+    data_template:
+      value: '{{ states(''sensor.furnace_time_on_today'') }}'
+    target:
+      entity_id: input_number.daily_furnace_usage_before
+  mode: single
+- id: '1644423180288'
+  alias: FURNACE - Daily Furnace Oil Set Current Usage
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.furnace_time_on_today
+  condition:
+  - condition: state
+    entity_id: sensor.living_room_thermostat_hvac_state //set to the name of your thermostat's HVAC state sensor
+    state: heat
+  action:
+  - service: input_number.set_value
+    data_template:
+      value: '{{ states(''sensor.furnace_time_on_today'') }}'
+    target:
+      entity_id: input_number.daily_furnace_usage_after
+  mode: queued
+  max: 10
+- id: '1644427064038'
+  alias: FURNACE - Furnace was ON
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.living_room_thermostat_hvac_state //set to the name of your thermostat's HVAC state sensor
+    from: heat
+  condition: []
+  action:
+  - service: input_number.set_value
+    data_template:
+      value: '{{ (states("input_number.furnace_fuel_level") | float) - (states("sensor.daily_furnace_usage_difference")
+        | float * 2.84) | round(1) }}'
+    target:
+      entity_id: input_number.furnace_fuel_level
+  - service: input_number.set_value
+    data_template:
+      value: '{{ (states("input_number.fuel_usage_since_last_fill") | float) + (states("sensor.daily_furnace_usage_difference")
+        | float * 2.84) | round(1) }}'
+    target:
+      entity_id: input_number.fuel_usage_since_last_fill
+  - service: input_number.set_value
+    data_template:
+      value: '{{ (states("input_number.fuel_usage_since_last_fill") | float) * (states("input_number.last_fill_price")
+        | float) | round(2) }}'
+    target:
+      entity_id: input_number.fuel_cost_since_last_fill
+  - service: input_number.set_value
+    data_template:
+      value: '{{ (states("input_number.furnace_fuel_level") | float / 2.84) | round(2)
+        }}'
+    target:
+      entity_id: input_number.heating_time_left
+  mode: single
+- id: '1644431921805'
+  alias: FURNACE - Set Furnace Fuel Level After Filling
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: input_number.furnace_oil_last_fill_amount
+  condition: []
+  action:
+  - service: input_number.set_value
+    data_template:
+      value: '{{ states("input_number.furnace_fuel_level" ) }}'
+    target:
+      entity_id: input_number.furnace_oil_previous_level
+  - service: input_number.set_value
+    data_template:
+      value: '{{ (states("input_number.furnace_oil_previous_level") | float) + (states("input_number.furnace_oil_last_fill_amount")
+        | float) | round(1) }}'
+    target:
+      entity_id: input_number.furnace_fuel_after_filling
+  - service: input_number.set_value
+    data_template:
+      value: '{{ states("input_number.furnace_fuel_after_filling") }}'
+    target:
+      entity_id: input_number.furnace_fuel_level
+  mode: single
+- id: '1644470309461'
+  alias: FURNACE - Reset Daily Fuel Usage
+  description: ''
+  trigger:
+  - platform: time
+    at: 00:00:00
+  condition: []
+  action:
+  - service: input_number.set_value
+    data:
+      value: 0
+    target:
+      entity_id:
+      - input_number.daily_furnace_usage_before
+      - input_number.daily_furnace_usage_after
+  mode: single
