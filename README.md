@@ -1,4 +1,4 @@
-# heatingoil_manager
+# Heating Oil Management Interface for Home Assistant
 Heating Oil Management for Home Assistant
 
 **SCREENSHOTS:**
