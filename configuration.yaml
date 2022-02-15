@@ -146,7 +146,7 @@ sensor:
       
   - platform: history_stats
     name: Furnace time on Today
-    entity_id: sensor.living_room_thermostat_hvac_state //SET TO THE NAME OF YOUR THERMOSTAT'S HVAC STATE SENSOR
+    entity_id: sensor.living_room_thermostat_hvac_state #SET TO THE NAME OF YOUR THERMOSTAT'S HVAC STATE SENSOR
     state: 'heat'
     type: time
     start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
@@ -154,7 +154,7 @@ sensor:
 
   - platform: history_stats
     name: Furnace time on Yesterday
-    entity_id: sensor.living_room_thermostat_hvac_state //SET TO THE NAME OF YOUR THERMOSTAT'S HVAC STATE SENSOR 
+    entity_id: sensor.living_room_thermostat_hvac_state #SET TO THE NAME OF YOUR THERMOSTAT'S HVAC STATE SENSOR 
     state: 'heat' 
     type: time
     end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
