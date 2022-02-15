@@ -3,7 +3,7 @@
   description: ''
   trigger:
   - platform: state
-    entity_id: sensor.living_room_thermostat_hvac_state //SET TO THE NAME OF YOUR THERMOSTAT'S HVAC STATE SENSOR
+    entity_id: sensor.living_room_thermostat_hvac_state #SET TO THE NAME OF YOUR THERMOSTAT'S HVAC STATE SENSOR
     to: heat
   condition: []
   action:
@@ -21,7 +21,7 @@
     entity_id: sensor.furnace_time_on_today
   condition:
   - condition: state
-    entity_id: sensor.living_room_thermostat_hvac_state //SET TO THE NAME OF YOUR THERMOSTAT'S HVAC STATE SENSOR
+    entity_id: sensor.living_room_thermostat_hvac_state #SET TO THE NAME OF YOUR THERMOSTAT'S HVAC STATE SENSOR
     state: heat
   action:
   - service: input_number.set_value
@@ -36,20 +36,20 @@
   description: ''
   trigger:
   - platform: state
-    entity_id: sensor.living_room_thermostat_hvac_state //set to the name of your thermostat's HVAC state sensor
+    entity_id: sensor.living_room_thermostat_hvac_state #SET TO THE NAME OF YOUR THERMOSTAT'S HVAC STATE SENSOR
     from: heat
   condition: []
   action:
   - service: input_number.set_value
     data_template:
       value: '{{ (states("input_number.furnace_fuel_level") | float) - (states("sensor.daily_furnace_usage_difference")
-        | float * 2.84) | round(1) }}'
+        | float * 2.84) | round(1) }}' #CHANGE "2.84" TO THE RATING FOR YOUR FUEL PUMP; THIS IS CURRENTLY SET TO 2.84L
     target:
       entity_id: input_number.furnace_fuel_level
   - service: input_number.set_value
     data_template:
       value: '{{ (states("input_number.fuel_usage_since_last_fill") | float) + (states("sensor.daily_furnace_usage_difference")
-        | float * 2.84) | round(1) }}'
+        | float * 2.84) | round(1) }}' #CHANGE "2.84" TO THE RATING FOR YOUR FUEL PUMP; THIS IS CURRENTLY SET TO 2.84L
     target:
       entity_id: input_number.fuel_usage_since_last_fill
   - service: input_number.set_value
@@ -61,7 +61,7 @@
   - service: input_number.set_value
     data_template:
       value: '{{ (states("input_number.furnace_fuel_level") | float / 2.84) | round(2)
-        }}'
+        }}' #CHANGE "2.84" TO THE RATING FOR YOUR FUEL PUMP; THIS IS CURRENTLY SET TO 2.84L
     target:
       entity_id: input_number.heating_time_left
   mode: single
