@@ -1,0 +1,162 @@
+input_boolean:
+  add_furnace_oil:
+    name: Add Furnace Oil
+    icon: mdi:gas-station
+
+  configure_fuel_levels:
+    name: Configure Fuel Levels
+    icon: mdi:cog
+
+input_number:
+  daily_furnace_usage_after:
+    name: Daily Furnace Usage (After)
+    min: 0
+    max: 100
+    step: 0.01
+    mode: box
+    unit_of_measurement: h
+    icon: mdi:clock-time-eight-outline
+
+  daily_furnace_usage_before:
+    name: Daily Furnace Usage (Before)
+    min: 0
+    max: 100
+    step: 0.01
+    mode: box
+    unit_of_measurement: h
+    icon: mdi:clock-time-eight-outline
+
+  fuel_cost_since_last_fill:
+    name: Fuel Cost Since Last Fill
+    min: 0
+    max: 1000
+    step: 0.01
+    mode: box
+    unit_of_measurement: $
+    icon: mdi:currency-usd
+
+  furnace_fuel_level:
+    name: Furnace Oil Level
+    min: 0
+    max: 910
+    step: 0.1
+    mode: box
+    unit_of_measurement: Litres
+    icon: mdi:car-coolant-level
+
+  heating_time_left
+    name: Heating Time Left
+    min: 0
+    max: 325
+    step: 0.01
+    mode: box
+    unit_of_measurement: Hours
+    icon: mdi:timer-sand
+
+  furnace_oil_last_fill_amount
+    name: Last Fill
+    min: 0
+    max: 910
+    step: 0.1
+    mode: box
+    unit_of_measurement: Litres
+    icon: mdi:car-coolant-level
+
+  last_fill_price
+    name: Last Fill Price
+    min: 0
+    max: 100
+    step: 0.001
+    mode: box
+    unit_of_measurement: Dollars
+    icon: mdi:currency-usd
+
+  furnace_fuel_after_filling
+    name: Level After Filling
+    min: 0
+    max: 910
+    step: 0.1
+    mode: box
+    unit_of_measurement: Litres
+    icon: mdi:car-coolant-level
+
+  furnace_oil_previous_level
+    name: Previous Level
+    min: 0
+    max: 910
+    step: 0.1
+    mode: box
+    unit_of_measurement: h
+    icon: mdi:car-coolant-level
+
+  fuel_usage_since_last_fill
+    name: Used Since Last Fill
+    min: 0
+    max: 100
+    step: 0.1
+    mode: box
+    unit_of_measurement: Litres
+    icon: mdi:car-coolant-level
+
+
+sensor:
+  - platform: template
+    sensors:
+      heating_days_left:
+        friendly_name: "Heating Days Left"
+        unit_of_measurement: 'Days'
+        value_template: >
+          {% set timeleft = states('input_number.heating_time_left') | float %}
+          {% set averageusage = states('sensor.average_furnace_daily_usage') | float %}
+          {{ ((timeleft / averageusage)) | round(0) }}
+        
+      heating_time_left:
+        friendly_name: "Heating Time Left"
+        unit_of_measurement: 'Hours'
+        value_template: > 
+          {% set timeleft = states('input_number.heating_time_left') | float %}
+          {{ ((timeleft)) | round(1) }}  
+
+      furnace_fuel_cost:
+        friendly_name: "Fuel Cost Since Last Fill"
+        unit_of_measurement: '$'   
+        value_template: > 
+          {% set fuelcost = states('input_number.fuel_cost_since_last_fill') | float %}
+          {{ ((fuelcost)) | round(2) }}  
+          
+      furnace_fuel_used:
+        friendly_name: "Fuel Usage Since Last Fill"
+        unit_of_measurement: 'Litres'   
+        value_template: > 
+          {% set fuelusage = states('input_number.fuel_usage_since_last_fill') | float %}
+          {{ ((fuelusage)) | round(1) }}  
+          
+      daily_furnace_usage_difference:
+        friendly_name: "Daily Furnace Usage Difference"
+        unit_of_measurement: 'Hours'    
+        value_template: > 
+          {% set usagebefore = states('input_number.daily_furnace_usage_before') | float %}
+          {% set usageafter = states('input_number.daily_furnace_usage_after') | float %}
+          {{ ((usageafter - usagebefore)) | round(2) }}
+
+  - platform: statistics
+    name: Average Furnace Daily Usage
+    entity_id: sensor.furnace_time_on_yesterday
+    state_characteristic: average_timeless
+      
+  - platform: history_stats
+    name: Furnace time on Today
+    entity_id: sensor.living_room_thermostat_hvac_state //set to the name of your thermostat's HVAC state sensor
+    state: 'heat'
+    type: time
+    start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    end: '{{ now() }}'
+
+  - platform: history_stats
+    name: Furnace time on Yesterday
+    entity_id: sensor.living_room_thermostat_hvac_state //set to the name of your thermostat's HVAC state sensor 
+    state: 'heat' 
+    type: time
+    end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    duration:
+      hours: 24
