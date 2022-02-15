@@ -1,0 +1,58 @@
+title: Dashboard
+views:
+  - title: Heating
+    path: heating
+    icon: mdi:radiator
+    type: panel
+    badges: []
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: thermostat
+            entity: climate.living_room  //YOUR THERMOSTAT ENTITY
+          - type: vertical-stack
+            cards:
+              - type: gauge
+                entity: input_number.furnace_fuel_level
+                min: 0
+                max: 910
+                needle: true
+                severity:
+                  green: 150
+                  yellow: 50
+                  red: 0
+                unit: Litres
+                name: Furnace Oil Remaining
+              - type: entities
+                entities:
+                  - entity: sensor.furnace_time_on_today
+                  - entity: sensor.furnace_time_on_yesterday
+                  - entity: sensor.furnace_fuel_used
+                  - entity: sensor.furnace_fuel_cost
+                  - entity: sensor.heating_time_left
+                  - entity: sensor.heating_days_left
+                  - entity: input_boolean.add_furnace_oil
+              - type: conditional
+                conditions:
+                  - entity: input_boolean.add_furnace_oil
+                    state: 'on'
+                card:
+                  type: entities
+                  entities:
+                    - entity: input_number.furnace_oil_last_fill_amount
+                    - entity: input_boolean.configure_fuel_levels
+              - type: conditional
+                conditions:
+                  - entity: input_boolean.configure_fuel_levels
+                    state: 'on'
+                card:
+                  type: entities
+                  entities:
+                    - entity: input_number.furnace_fuel_level
+                    - entity: input_number.fuel_cost_since_last_fill
+                    - entity: input_number.heating_time_left
+                    - entity: input_number.fuel_usage_since_last_fill
+                    - entity: input_number.furnace_fuel_after_filling
+                    - entity: input_number.furnace_oil_last_fill_amount
+                    - entity: input_number.last_fill_price
+                    - entity: input_number.furnace_oil_previous_level
