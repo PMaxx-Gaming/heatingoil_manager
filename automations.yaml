@@ -89,6 +89,19 @@
       value: '{{ states("input_number.furnace_fuel_after_filling") }}'
     target:
       entity_id: input_number.furnace_fuel_level
+  - service: input_number.set_value
+    data_template:
+      value: '{{ (states("input_number.furnace_fuel_level") | float / 2.84) | round(2)
+        }}' #CHANGE "2.84" TO THE RATING FOR YOUR FUEL PUMP; THIS IS CURRENTLY SET TO 2.84L
+    target:
+      entity_id: input_number.heating_time_left
+  - service: input_number.set_value
+    data:
+      value: 0
+    target:
+      entity_id:
+      - input_number.fuel_cost_since_last_fill
+      - input_number.fuel_usage_since_last_fill
   mode: single
 - id: '1644470309461'
   alias: FURNACE - Reset Daily Fuel Usage
